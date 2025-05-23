@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { GraduationCap, Code, Users, Award } from 'lucide-react';
+import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 
 const About = () => {
   const highlights = [
@@ -29,11 +30,20 @@ const About = () => {
   return (
     <section className="py-20 bg-white" id="about">
       <div className="container mx-auto px-6">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            About <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Me</span>
-          </h2>
-          <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-purple-600 mx-auto mb-8"></div>
+        <div className="flex items-center justify-center gap-4 mb-16">
+          <div className="w-28 h-28 md:w-36 md:h-36 overflow-hidden rounded-full border-4 border-blue-600 shadow-lg">
+            <img 
+              src="https://images.unsplash.com/photo-1581092795360-fd1ca04f0952" 
+              alt="Alex Chen" 
+              className="w-full h-full object-cover"
+            />
+          </div>
+          <div>
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+              About <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Me</span>
+            </h2>
+            <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-purple-600 mb-2"></div>
+          </div>
         </div>
         
         <div className="grid lg:grid-cols-2 gap-12 items-center">

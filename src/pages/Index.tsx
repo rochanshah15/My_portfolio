@@ -21,11 +21,11 @@ const Index = () => {
       
       {/* Footer */}
       <footer className="bg-gray-100 dark:bg-gray-950 py-8 border-t border-gray-200 dark:border-gray-800">
-        <div className="container mx-auto px-6 text-center">
+        <div className="container mx-auto px-4 sm:px-6 text-center">
           <p className="text-gray-600 dark:text-gray-400">
             © 2024 Alex Chen. Built with React, TypeScript, and Tailwind CSS.
           </p>
-          <div className="flex justify-center items-center gap-2 mt-2">
+          <div className="flex flex-wrap justify-center items-center gap-2 mt-2">
             <span className="text-xs text-gray-500 dark:text-gray-500">•</span>
             <span className="text-xs text-gray-500 dark:text-gray-500">Privacy Policy</span>
             <span className="text-xs text-gray-500 dark:text-gray-500">•</span>

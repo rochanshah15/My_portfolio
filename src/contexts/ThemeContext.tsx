@@ -35,18 +35,43 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     return 'light';
   });
 
+  // Apply theme class and store preference
   useEffect(() => {
     const root = window.document.documentElement;
     
     // Add transition class for smooth theme transitions, but only after initial load
-    if (root.classList.contains('light') || root.classList.contains('dark')) {
+    const addTransition = () => {
       root.classList.add('transition-colors', 'duration-300');
-    }
+    };
     
+    // Small timeout to prevent transition on initial load
+    const timeoutId = setTimeout(addTransition, 100);
+    
+    // Toggle theme classes
     root.classList.remove('light', 'dark');
     root.classList.add(theme);
     localStorage.setItem('theme', theme);
+    
+    return () => clearTimeout(timeoutId);
   }, [theme]);
+
+  // Listen for system preference changes
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    
+    const handleChange = (e: MediaQueryListEvent) => {
+      if (!localStorage.getItem('theme')) {
+        setTheme(e.matches ? 'dark' : 'light');
+      }
+    };
+    
+    if (mediaQuery.addEventListener) {
+      mediaQuery.addEventListener('change', handleChange);
+      return () => mediaQuery.removeEventListener('change', handleChange);
+    }
+    
+    return undefined;
+  }, []);
 
   const toggleTheme = () => {
     setTheme(prevTheme => prevTheme === 'light' ? 'dark' : 'light');

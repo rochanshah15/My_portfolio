@@ -21,13 +21,28 @@ export const useTheme = () => {
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [theme, setTheme] = useState<Theme>(() => {
     if (typeof window !== 'undefined') {
-      return (localStorage.getItem('theme') as Theme) || 'light';
+      // Check user preference or system preference
+      const savedTheme = localStorage.getItem('theme') as Theme;
+      if (savedTheme) {
+        return savedTheme;
+      }
+      
+      // Check system preference
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        return 'dark';
+      }
     }
     return 'light';
   });
 
   useEffect(() => {
     const root = window.document.documentElement;
+    
+    // Add transition class for smooth theme transitions, but only after initial load
+    if (root.classList.contains('light') || root.classList.contains('dark')) {
+      root.classList.add('transition-colors', 'duration-300');
+    }
+    
     root.classList.remove('light', 'dark');
     root.classList.add(theme);
     localStorage.setItem('theme', theme);

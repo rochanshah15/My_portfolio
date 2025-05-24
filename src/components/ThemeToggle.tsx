@@ -14,16 +14,21 @@ const ThemeToggle = () => {
       variant="outline"
       size="sm"
       className={cn(
-        "w-10 h-10 rounded-full bg-white/10 backdrop-blur-lg hover:bg-white/20 dark:bg-gray-800/50 dark:hover:bg-gray-700/70 transition-all duration-300 border border-gray-200 dark:border-gray-700 shadow-sm",
-        "flex items-center justify-center"
+        "w-9 h-9 sm:w-10 sm:h-10 rounded-full transition-all duration-300 border shadow-sm",
+        "flex items-center justify-center relative overflow-hidden",
+        theme === 'light' 
+          ? "bg-gray-900 hover:bg-gray-800 border-gray-700 shadow-lg" 
+          : "bg-white/10 backdrop-blur-lg hover:bg-white/20 border-gray-200 dark:border-gray-700"
       )}
       aria-label="Toggle theme"
     >
-      {theme === 'light' ? (
-        <Moon className="w-5 h-5 text-gray-700 dark:text-blue-400" />
-      ) : (
-        <Sun className="w-5 h-5 text-amber-500" />
-      )}
+      <div className="relative w-full h-full flex items-center justify-center">
+        {theme === 'light' ? (
+          <Moon className="w-4 h-4 sm:w-5 sm:h-5 text-white transition-all duration-300" />
+        ) : (
+          <Sun className="w-4 h-4 sm:w-5 sm:h-5 text-amber-500 transition-all duration-300" />
+        )}
+      </div>
     </Toggle>
   );
 };

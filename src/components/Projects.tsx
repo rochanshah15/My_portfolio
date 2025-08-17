@@ -10,35 +10,51 @@ const Projects = () => {
 
   const projects = [
     {
-      title: "E-Commerce Platform",
-      description: "Full-stack web application built with React, Node.js, and MongoDB. Features include user authentication, payment integration, and admin dashboard.",
-      technologies: ["React", "Node.js", "MongoDB", "Stripe"],
+      title: "BookMyBox",
+      description: "Full-stack web application built with React, Django-REST, and Sqlite. Features include user authentication, payment integration, dashboards and more.",
+      technologies: ["React", "Django-REST", "Sqlite", "Razorpay"],
       image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d",
-      github: "#",
+      github: "https://github.com/rochanshah15/BookMyBox",
       live: "#"
     },
     {
-      title: "Task Management App",
-      description: "A collaborative task management application with real-time updates, drag-and-drop functionality, and team collaboration features.",
-      technologies: ["Vue.js", "Firebase", "Tailwind CSS"],
+      title: "EasyPDF",
+      description: "An intuitive application for editing, merging, splitting, and converting PDF files, simplifying your document workflow.",
+      technologies: ["HTML", "CSS", "JS", "FLASK", "CLERK AUTH"],
       image: "https://images.unsplash.com/photo-1611224923853-80b023f02d71",
-      github: "#",
-      live: "#"
+      github: "https://github.com/rochanshah15/EasyPDF",
+      live: "https://easypdf-k8ne.onrender.com"
     },
     {
-      title: "Weather Analytics Dashboard",
-      description: "Data visualization dashboard that displays weather patterns and analytics using APIs, charts, and interactive maps.",
-      technologies: ["Python", "Flask", "Chart.js", "APIs"],
+      title: "Saarthi-AI assistant",
+      description: "A voice-activated AI personal assistant designed to automate tasks, answer queries, and manage your digital life [JARVIS].",
+      technologies: ["Python", "Libraries", "APIs"],
       image: "https://images.unsplash.com/photo-1504608524841-42fe6f032b4b",
-      github: "#",
+      github: "https://github.com/rochanshah15/JARVIS-AI-ASSISTANT",
       live: "#"
     },
     {
-      title: "Social Media Clone",
-      description: "Instagram-like social media platform with photo sharing, likes, comments, and real-time messaging features.",
+      title: "HackMate",
+      description: "A comprehensive platform to organize hackathon events, find teammates with matching skills, and build innovative projects.",
       technologies: ["React Native", "Firebase", "Redux"],
       image: "https://images.unsplash.com/photo-1611605698335-8b1569810432",
-      github: "#",
+      github: "https://github.com/rochanshah15/HackMate",
+      live: "#"
+    },
+    {
+      title: "Roamantics",
+      description: "An interactive frontend for a travel planner, showcasing curated tours and breathtaking destinations to help users visualize and craft their perfect vacation itinerary.",
+      technologies: ["HTML", "TAILWIND CSS", "JS"],
+      image: "https://images.unsplash.com/photo-1611605698335-8b1569810432",
+      github: "https://github.com/rochanshah15/Roamantics",
+      live: "#"
+    },
+    {
+      title: "HotelEase",
+      description: "A comprehensive hotel management system to handle bookings, customer inquiries, and room management.",
+      technologies: ["Java", "DataStructures", "PostgreSQL", "XAMPP"],
+      image: "https://images.unsplash.com/photo-1504608524841-42fe6f032b4b",
+      github: "https://github.com/rochanshah15/HOTELEASE",
       live: "#"
     }
   ];
@@ -91,17 +107,41 @@ const Projects = () => {
                   className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
-                  <a href={project.github} className="p-2 bg-white/90 dark:bg-gray-800/90 rounded-full hover:bg-white dark:hover:bg-gray-700 transition-all duration-300 transform hover:scale-110 hover:rotate-12">
-                    <Github size={20} className="text-gray-700 dark:text-gray-300" />
-                  </a>
-                  <a href={project.live} className="p-2 bg-white/90 dark:bg-gray-800/90 rounded-full hover:bg-white dark:hover:bg-gray-700 transition-all duration-300 transform hover:scale-110 hover:rotate-12">
-                    <ExternalLink size={20} className="text-gray-700 dark:text-gray-300" />
-                  </a>
+                <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 z-20">
+                  {project.github && project.github !== "#" ? (
+                    <a 
+                      href={project.github} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="p-2 bg-white/90 dark:bg-gray-800/90 rounded-full hover:bg-white dark:hover:bg-gray-700 transition-all duration-300 transform hover:scale-110 hover:rotate-12"
+                      aria-label="View GitHub repository"
+                    >
+                      <Github size={20} className="text-gray-700 dark:text-gray-300" />
+                    </a>
+                  ) : (
+                    <div className="p-2 bg-gray-300/50 dark:bg-gray-600/50 rounded-full cursor-not-allowed opacity-50">
+                      <Github size={20} className="text-gray-500 dark:text-gray-400" />
+                    </div>
+                  )}
+                  {project.live && project.live !== "#" ? (
+                    <a 
+                      href={project.live} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="p-2 bg-white/90 dark:bg-gray-800/90 rounded-full hover:bg-white dark:hover:bg-gray-700 transition-all duration-300 transform hover:scale-110 hover:rotate-12"
+                      aria-label="View live demo"
+                    >
+                      <ExternalLink size={20} className="text-gray-700 dark:text-gray-300" />
+                    </a>
+                  ) : (
+                    <div className="p-2 bg-gray-300/50 dark:bg-gray-600/50 rounded-full cursor-not-allowed opacity-50">
+                      <ExternalLink size={20} className="text-gray-500 dark:text-gray-400" />
+                    </div>
+                  )}
                 </div>
                 
                 {/* Shimmer effect overlay */}
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 animate-shimmer group-hover:animate-shimmer"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 animate-shimmer group-hover:animate-shimmer z-10 pointer-events-none"></div>
               </div>
               
               <div className="p-6">
@@ -131,7 +171,9 @@ const Projects = () => {
           projectsVisible ? 'opacity-100' : 'opacity-0'
         }`} style={{ animationDelay: '1200ms' }}>
           <a 
-            href="#" 
+            href="https://github.com/rochanshah15" 
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-3 rounded-full font-semibold hover:shadow-2xl transform hover:scale-105 transition-all duration-300 group relative overflow-hidden"
           >
             <div className="absolute inset-0 bg-white/20 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>

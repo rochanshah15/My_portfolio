@@ -33,7 +33,7 @@ const Hero = () => {
           
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center animate-in fade-in slide-in-from-bottom-4 duration-700 delay-700 pt-4 sm:pt-8">
             <a 
-              href="/resume.pdf" 
+              href="/CV_ROCHAN_LJU - Copy.pdf"  
               download 
               className="w-full sm:w-auto max-w-xs sm:max-w-none group"
             >

@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
+import emailjs from '@emailjs/browser';
 import { Mail, Phone, MapPin, Send, Github, Linkedin, Twitter, Instagram } from 'lucide-react';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
 
@@ -6,6 +7,43 @@ const Contact = () => {
   const { ref: sectionRef, isVisible } = useScrollAnimation({ threshold: 0.1 });
   const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation({ threshold: 0.3 });
   const { ref: contentRef, isVisible: contentVisible } = useScrollAnimation({ threshold: 0.2 });
+  
+  const form = useRef<HTMLFormElement>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSent, setIsSent] = useState(false);
+
+  const sendEmail = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    if (!form.current) {
+      setIsSubmitting(false);
+      return;
+    }
+
+    emailjs
+      .sendForm(
+        'service_rbqoepu',      // Your Service ID
+        'template_j10de66',     // Your Template ID
+        form.current, 
+        'vGIRnQaLowt7o31fg'       // IMPORTANT: Replace with your Public Key
+      )
+      .then(
+        (result) => {
+          console.log('SUCCESS!', result.text);
+          setIsSent(true);
+          setIsSubmitting(false);
+          if (form.current) {
+            form.current.reset(); // Reset form fields
+          }
+        },
+        (error) => {
+          console.log('FAILED...', error.text);
+          setIsSubmitting(false);
+          alert('Failed to send message. Please try again.');
+        }
+      );
+  };
 
   return (
     <section 
@@ -15,7 +53,6 @@ const Contact = () => {
       }`} 
       id="contact"
     >
-      {/* Animated background elements */}
       <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-purple-600/10 animate-gradient-x"></div>
       <div className="absolute top-10 left-10 w-32 h-32 bg-blue-400/20 rounded-full filter blur-xl animate-float"></div>
       <div className="absolute bottom-10 right-10 w-48 h-48 bg-purple-400/20 rounded-full filter blur-xl animate-float" style={{ animationDelay: '2s' }}></div>
@@ -107,20 +144,25 @@ const Contact = () => {
             contentVisible ? 'opacity-100' : 'opacity-0'
           }`} style={{ animationDelay: '700ms' }}>
             <h3 className="text-2xl font-bold mb-6">Send a Message</h3>
-            <form className="space-y-6">
+            
+            <form ref={form} onSubmit={sendEmail} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="animate-in slide-in-from-bottom-4 duration-500 delay-1000">
                   <input 
                     type="text" 
+                    name="from_name"
                     placeholder="Your Name"
                     className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg focus:border-blue-400 focus:bg-white/15 focus:outline-none transition-all duration-300 text-white placeholder-blue-200 hover:bg-white/15"
+                    required
                   />
                 </div>
                 <div className="animate-in slide-in-from-bottom-4 duration-500 delay-1100">
                   <input 
                     type="email" 
+                    name="from_email"
                     placeholder="Your Email"
                     className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg focus:border-blue-400 focus:bg-white/15 focus:outline-none transition-all duration-300 text-white placeholder-blue-200 hover:bg-white/15"
+                    required
                   />
                 </div>
               </div>
@@ -128,33 +170,33 @@ const Contact = () => {
               <div className="animate-in slide-in-from-bottom-4 duration-500 delay-1200">
                 <input 
                   type="text" 
+                  name="subject"
                   placeholder="Subject"
                   className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg focus:border-blue-400 focus:bg-white/15 focus:outline-none transition-all duration-300 text-white placeholder-blue-200 hover:bg-white/15"
+                  required
                 />
               </div>
               
               <div className="animate-in slide-in-from-bottom-4 duration-500 delay-1300">
                 <textarea 
                   rows={4}
+                  name="message"
                   placeholder="Your Message"
                   className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg focus:border-blue-400 focus:bg-white/15 focus:outline-none transition-all duration-300 text-white placeholder-blue-200 resize-none hover:bg-white/15"
+                  required
                 ></textarea>
               </div>
               
               <div className="animate-in slide-in-from-bottom-4 duration-500 delay-1400">
-                <a 
-                  href="mailto:shahrochan05@gmail.com?subject=Hello&body=Hi, I'd like to connect with you!" 
-                  className="w-full sm:w-auto group"
+                <button 
+                  type="submit"
+                  disabled={isSubmitting || isSent}
+                  className="w-full bg-gradient-to-r from-blue-500 to-purple-500 text-white px-8 py-3 rounded-lg font-semibold hover:from-blue-600 hover:to-purple-600 transform hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2 relative overflow-hidden group disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  <button 
-                    type="button"
-                    className="w-full bg-gradient-to-r from-blue-500 to-purple-500 text-white px-8 py-3 rounded-lg font-semibold hover:from-blue-600 hover:to-purple-600 transform hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2 relative overflow-hidden"
-                  >
-                    <div className="absolute inset-0 bg-white/20 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
-                    <Send size={20} className="group-hover:rotate-12 transition-transform duration-300" />
-                    Send Message
-                  </button>
-                </a>
+                  <div className="absolute inset-0 bg-white/20 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+                  <Send size={20} className="group-hover:rotate-12 transition-transform duration-300" />
+                  {isSubmitting ? 'Sending...' : isSent ? 'Message Sent!' : 'Send Message'}
+                </button>
               </div>
             </form>
           </div>

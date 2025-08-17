@@ -80,7 +80,7 @@ const Navigation = () => {
               className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 sm:px-6 py-2 rounded-full font-medium hover:shadow-2xl transform hover:scale-105 transition-all duration-300 text-sm sm:text-base hover:from-blue-700 hover:to-purple-700 animate-in slide-in-from-bottom-5 delay-300"
               style={{ animationDuration: '700ms' }}
             >
-              Hire Me
+              Reach out
             </button>
           </div>
           

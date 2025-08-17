@@ -31,7 +31,7 @@ const Index = () => {
       >
         <div className="container mx-auto px-4 sm:px-6 text-center">
           <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 mb-2 sm:mb-0">
-            © 2024 Alex Chen. Built with React, TypeScript, and Tailwind CSS.
+          © 2025 Shah Rochan. Crafted with ❤️ using React, TypeScript, and Tailwind CSS.
           </p>
           <div className="flex flex-wrap justify-center items-center gap-1 sm:gap-2 mt-2">
             <span className="text-xs text-gray-500 dark:text-gray-500">•</span>

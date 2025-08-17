@@ -39,9 +39,9 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   useEffect(() => {
     const root = window.document.documentElement;
     
-    // Add transition class for smooth theme transitions, but only after initial load
+    // Add transition class for smooth theme transitions
     const addTransition = () => {
-      root.classList.add('transition-colors', 'duration-300');
+      root.classList.add('transition-colors', 'duration-500', 'ease-in-out');
     };
     
     // Small timeout to prevent transition on initial load
@@ -51,6 +51,9 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     root.classList.remove('light', 'dark');
     root.classList.add(theme);
     localStorage.setItem('theme', theme);
+    
+    // Add smooth background transitions
+    document.body.style.transition = 'background-color 0.5s ease-in-out, color 0.5s ease-in-out';
     
     return () => clearTimeout(timeoutId);
   }, [theme]);

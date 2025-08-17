@@ -10,20 +10,20 @@ const Skills = () => {
     {
       title: "Programming Languages",
       skills: [
-        { name: "Python", level: 90 },
-        { name: "Java", level: 85 },
-        { name: "JavaScript", level: 88 },
-        { name: "C++", level: 80 },
-        { name: "TypeScript", level: 82 }
+        { name: "Python", level: 95 },
+        { name: "Java", level: 70 },
+        { name: "JavaScript", level: 80 },
+        { name: "C/C++", level: 50 },
+        { name: "TypeScript", level: 60 }
       ]
     },
     {
       title: "Web Development",
       skills: [
-        { name: "React", level: 85 },
+        { name: "React", level: 90 },
         { name: "Node.js", level: 80 },
-        { name: "HTML/CSS", level: 92 },
-        { name: "MongoDB", level: 75 },
+        { name: "HTML/CSS", level: 95 },
+        { name: "MongoDB", level: 90 },
         { name: "Express.js", level: 78 }
       ]
     },
@@ -31,9 +31,9 @@ const Skills = () => {
       title: "Tools & Technologies",
       skills: [
         { name: "Git", level: 88 },
-        { name: "Docker", level: 70 },
-        { name: "AWS", level: 65 },
-        { name: "Linux", level: 82 },
+        { name: "PostMan", level: 80 },
+        { name: "AWS", level: 0 },
+        { name: "Git-Hub", level: 82 },
         { name: "VS Code", level: 95 }
       ]
     }
@@ -66,31 +66,36 @@ const Skills = () => {
           {skillCategories.map((category, index) => (
             <div 
               key={index} 
-              className={`bg-white dark:bg-gray-800 rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 ${
+              className={`bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 shadow-lg hover:shadow-2xl border border-gray-100 dark:border-gray-700 transition-all duration-500 transform hover:-translate-y-3 hover:scale-105 group ${
                 skillsVisible ? 'animate-fade-in' : ''
               }`}
-              style={{ animationDelay: `${index * 200}ms` }}
+              style={{ 
+                animationDelay: `${index * 200}ms`,
+                transitionDelay: `${index * 100}ms`
+              }}
             >
-              <h3 className="text-lg xs:text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-6 text-center leading-tight">
+              <h3 className="text-lg xs:text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-6 text-center leading-tight group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
                 {category.title}
               </h3>
               <div className="space-y-3 sm:space-y-4">
                 {category.skills.map((skill, skillIndex) => (
-                  <div key={skillIndex} className="space-y-2">
+                  <div key={skillIndex} className="space-y-2 group/skill">
                     <div className="flex justify-between items-center">
-                      <span className="text-sm sm:text-base text-gray-700 dark:text-gray-300 font-medium">{skill.name}</span>
-                      <span className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">{skill.level}%</span>
+                      <span className="text-sm sm:text-base text-gray-700 dark:text-gray-300 font-medium group-hover/skill:text-gray-900 dark:group-hover/skill:text-gray-100 transition-colors duration-300">{skill.name}</span>
+                      <span className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 group-hover/skill:text-blue-600 dark:group-hover/skill:text-blue-400 transition-colors duration-300">{skill.level}%</span>
                     </div>
-                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5 sm:h-2">
+                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5 sm:h-2 overflow-hidden">
                       <div 
-                        className={`bg-gradient-to-r from-blue-600 to-purple-600 h-1.5 sm:h-2 rounded-full transition-all duration-1000 ease-out ${
+                        className={`bg-gradient-to-r from-blue-600 to-purple-600 h-1.5 sm:h-2 rounded-full transition-all duration-1000 ease-out relative ${
                           skillsVisible ? '' : 'w-0'
                         }`}
                         style={{ 
                           width: skillsVisible ? `${skill.level}%` : '0%',
                           transitionDelay: `${(index * 200) + (skillIndex * 100)}ms`
                         }}
-                      ></div>
+                      >
+                        <div className="absolute inset-0 bg-white/20 animate-shimmer"></div>
+                      </div>
                     </div>
                   </div>
                 ))}

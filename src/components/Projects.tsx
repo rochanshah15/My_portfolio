@@ -1,8 +1,13 @@
 
 import React from 'react';
 import { Github, ExternalLink, Code2 } from 'lucide-react';
+import { useScrollAnimation } from '../hooks/useScrollAnimation';
 
 const Projects = () => {
+  const { ref: sectionRef, isVisible } = useScrollAnimation({ threshold: 0.1 });
+  const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation({ threshold: 0.3 });
+  const { ref: projectsRef, isVisible: projectsVisible } = useScrollAnimation({ threshold: 0.1 });
+
   const projects = [
     {
       title: "E-Commerce Platform",
@@ -39,21 +44,46 @@ const Projects = () => {
   ];
 
   return (
-    <section className="py-20 bg-white dark:bg-gray-900" id="projects">
+    <section 
+      ref={sectionRef}
+      className={`py-20 bg-white dark:bg-gray-900 transition-all duration-1000 ${
+        isVisible ? 'opacity-100' : 'opacity-0'
+      }`} 
+      id="projects"
+    >
       <div className="container mx-auto px-6">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
-            Featured <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Projects</span>
+        <div 
+          ref={headerRef}
+          className={`text-center mb-16 transition-all duration-1000 ${
+            headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+          }`}
+        >
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4 animate-in slide-in-from-top-5 duration-700">
+            Featured <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent animate-gradient-x">Projects</span>
           </h2>
-          <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-purple-600 mx-auto mb-8"></div>
-          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+          <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-purple-600 mx-auto mb-8 animate-in slide-in-from-left-5 duration-700 delay-300"></div>
+          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto animate-in fade-in duration-700 delay-500">
             A showcase of my recent work and personal projects that demonstrate my skills and passion for development
           </p>
         </div>
         
-        <div className="grid md:grid-cols-2 gap-8">
+        <div 
+          ref={projectsRef}
+          className={`grid md:grid-cols-2 gap-8 transition-all duration-1000 delay-300 ${
+            projectsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+          }`}
+        >
           {projects.map((project, index) => (
-            <div key={index} className="group bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-2xl dark:shadow-blue-900/5 dark:hover:shadow-blue-900/10 transition-all duration-500 overflow-hidden transform hover:-translate-y-2">
+            <div 
+              key={index} 
+              className={`group bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-2xl dark:shadow-blue-900/5 dark:hover:shadow-blue-900/10 transition-all duration-500 overflow-hidden transform hover:-translate-y-2 animate-in fade-in slide-in-from-bottom-8 ${
+                projectsVisible ? 'opacity-100' : 'opacity-0'
+              }`}
+              style={{ 
+                animationDelay: `${600 + index * 200}ms`,
+                transitionDelay: `${index * 100}ms`
+              }}
+            >
               <div className="relative overflow-hidden">
                 <img 
                   src={project.image} 
@@ -61,28 +91,32 @@ const Projects = () => {
                   className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <a href={project.github} className="p-2 bg-white/90 dark:bg-gray-800/90 rounded-full hover:bg-white dark:hover:bg-gray-700 transition-colors">
+                <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+                  <a href={project.github} className="p-2 bg-white/90 dark:bg-gray-800/90 rounded-full hover:bg-white dark:hover:bg-gray-700 transition-all duration-300 transform hover:scale-110 hover:rotate-12">
                     <Github size={20} className="text-gray-700 dark:text-gray-300" />
                   </a>
-                  <a href={project.live} className="p-2 bg-white/90 dark:bg-gray-800/90 rounded-full hover:bg-white dark:hover:bg-gray-700 transition-colors">
+                  <a href={project.live} className="p-2 bg-white/90 dark:bg-gray-800/90 rounded-full hover:bg-white dark:hover:bg-gray-700 transition-all duration-300 transform hover:scale-110 hover:rotate-12">
                     <ExternalLink size={20} className="text-gray-700 dark:text-gray-300" />
                   </a>
                 </div>
+                
+                {/* Shimmer effect overlay */}
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 animate-shimmer group-hover:animate-shimmer"></div>
               </div>
               
               <div className="p-6">
-                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
                   {project.title}
                 </h3>
-                <p className="text-gray-600 dark:text-gray-300 mb-4 leading-relaxed">
+                <p className="text-gray-600 dark:text-gray-300 mb-4 leading-relaxed group-hover:text-gray-700 dark:group-hover:text-gray-200 transition-colors duration-300">
                   {project.description}
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {project.technologies.map((tech, techIndex) => (
                     <span 
                       key={techIndex}
-                      className="px-3 py-1 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-sm font-medium"
+                      className="px-3 py-1 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-sm font-medium hover:bg-blue-100 dark:hover:bg-blue-900/50 cursor-default transform hover:scale-105 transition-all duration-300"
+                      style={{ transitionDelay: `${techIndex * 50}ms` }}
                     >
                       {tech}
                     </span>
@@ -93,12 +127,15 @@ const Projects = () => {
           ))}
         </div>
         
-        <div className="text-center mt-12">
+        <div className={`text-center mt-12 animate-in fade-in duration-700 ${
+          projectsVisible ? 'opacity-100' : 'opacity-0'
+        }`} style={{ animationDelay: '1200ms' }}>
           <a 
             href="#" 
-            className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-3 rounded-full font-semibold hover:shadow-lg transform hover:scale-105 transition-all duration-300"
+            className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-3 rounded-full font-semibold hover:shadow-2xl transform hover:scale-105 transition-all duration-300 group relative overflow-hidden"
           >
-            <Code2 size={20} />
+            <div className="absolute inset-0 bg-white/20 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+            <Code2 size={20} className="group-hover:rotate-12 transition-transform duration-300" />
             View All Projects
           </a>
         </div>
